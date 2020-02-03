@@ -66,7 +66,7 @@ function buildPlot(){
         yLinearScale = yScale(healthData);
 
         //Add the SVG Text Element to the chart group
-        var text = chartGroup.selectAll("text")
+        var text = chartGroup.selectAll(".stateText")
         .data(healthData)
         .enter()
         .append("text")
@@ -75,11 +75,11 @@ function buildPlot(){
         .duration(30)
         .attr("x", d => xLinearScale(d[chosenXAxis])-7)
         .attr("y", d => yLinearScale(d.income)+4)
-        .text( function (d) { return `${d.abbr}` })
+        .text( d => `${d.abbr}` )
         .attr("font-family", "sans-serif")
         .attr("font-size", "10px")
-        .attr("fill", "black");
-    }
+        .attr("fill", "black")
+    };
 
     // function used for updating xAxis var upon click on axis label
     function renderAxes(newXScale, xAxis) {
@@ -141,12 +141,13 @@ function buildPlot(){
 
         if (err) throw err;
 
-        console.log(healthData);
+        //console.log(healthData);
 
         healthData.forEach(function (state){
             state.obesity = +state.obesity
             state.income = +state.income
             state.smokes = +state.smokes
+            //console.log(state.obesity, state.income, state.smokes, state.abbr)
         });
 
         // Create scale functions
@@ -154,7 +155,7 @@ function buildPlot(){
         // xLinearScale function above csv import
         var xLinearScale = xScale(healthData, chosenXAxis);
 
-        yLinearScale = yScale(healthData);
+        var yLinearScale = yScale(healthData);
 
         // Create axis functions
         // ==============================
